@@ -15,10 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from dj.view import hello
+from dj.view import hello, current_datetime,\
+     current_datetime_t, current_datetime_f, \
+     display_meta, current_datetime_r, test_extend
 
 urlpatterns = [
-     # path('admin/', admin.site.urls),
+     #path('admin/', admin.site.urls),
      path('hello/', hello),
+     path('current_datetime/', current_datetime),
+     path('current_datetime_t/', current_datetime_t),
+     path('current_datetime_f/', current_datetime_f),
+     path('current_datetime_r/', current_datetime_r),
+     path('display_meta/', display_meta),
+     path('test_extend/', test_extend),
 ]
 
