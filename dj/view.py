@@ -5,12 +5,36 @@ from django.template import Template, Context
 from django.shortcuts import render
 import sys
 import os
-
+from bs.models import Users, Orders
 # noinspection PyUnusedLocal
 
 
 def hello(request):
-    return HttpResponse("hello")
+    """
+    取数据,id是列名,name也是列名字
+    l = test.objects.all()
+    r = test.objects.get(id=1)
+    r = r.name
+
+    插数据
+    t1 = test(name='hhhh')
+    t1.save()
+
+    更新数据
+    t1 = test.objects.get(id=1)
+    t1.name = '更新'
+    t1.save()
+
+    删除数据
+    # 1
+    t1 = test.objects.get(id=2)
+    t1.delete()
+    # 2
+    test.objects.filter(id=3).delete()
+    """
+    l = Orders.objects.get(id=97)
+    name = l.o_u.u_pw
+    return HttpResponse(name)
 
 
 def current_datetime(request):

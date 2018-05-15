@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bs',
 ]
 
 MIDDLEWARE = [
@@ -77,8 +78,13 @@ WSGI_APPLICATION = 'dj.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    'ENGINE': 'django.db.backends.mysql',
+    'NAME': 'bs',   #数据库名
+    'USER': 'liuzhejun',    #用户名
+    'PASSWORD': 'lk1821-*',
+    'HOST': '127.0.0.1',
+    'PORT': '3306',
+    'CHARSET':'utf8',##设置字符集，不然会出现中文乱码
     }
 }
 

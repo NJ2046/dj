@@ -20,7 +20,7 @@ from dj.view import hello, current_datetime,\
      display_meta, current_datetime_r, test_extend
 
 urlpatterns = [
-     #path('admin/', admin.site.urls),
+     path('admin/', admin.site.urls),
      path('hello/', hello),
      path('current_datetime/', current_datetime),
      path('current_datetime_t/', current_datetime_t),
