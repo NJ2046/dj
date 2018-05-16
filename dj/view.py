@@ -3,9 +3,10 @@ from django.template.loader import get_template
 import datetime
 from django.template import Template, Context
 from django.shortcuts import render
+from django.db import connection
 import sys
 import os
-from bs.models import Users, Orders
+from bs.models import Users, Orders, Books
 # noinspection PyUnusedLocal
 
 
@@ -87,6 +88,48 @@ def test_extend(request):
     now = datetime.datetime.now()
     return render(request, 'current_datetime.html', {'current_date': now})
     pass
+
+
+def search_form(request):
+    return render(request, 'search_form.html')
+
+
+def search1(request):
+    if 'q' in request.GET:
+        message = 'You searched for %r' % request.GET['q']
+    else:
+        message = 'You submitted an empty form'
+    return  HttpResponse(message)
+
+
+def search(request):
+    if 'q' in request.GET and request.GET['q']:
+        q = request.GET['q']
+        books = Books.objects.filter(b_name__icontains=q)
+        return render(request, 'search_results.html', {'books': books, 'query': q})
+
+
+def index(request):
+    cursor = connection.cursor()
+    cursor.execute('''select o.od_b_id,sum(b.b_price) t
+                    from orderdetails o INNER JOIN bs_books b on o.od_b_id = b.id
+                    group by o.od_b_id
+                    ORDER BY t desc
+                    limit 10'''
+                   );
+    row = cursor.fetchall()
+    ids = [t[0] for t in row]
+    hots_s = (Books.objects.filter(id__in=ids[:5]))
+    hots_x = (Books.objects.filter(id__in=ids[5:]))
+    # books = Books.objects.filter(b_writer='谭浩强')
+    books = Books.objects.order_by('b_price')[0:5]
+    return render(request, 'index.html', {'books': books, 'hots_s': hots_s, 'hots_x': hots_x})
+    pass
+
+
+def register(request):
+    return render(request, 'register.html')
+
 
 if __name__ == '__main__':
     fp = open('./template/test.html', 'r', encoding='utf-8')

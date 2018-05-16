@@ -106,6 +106,8 @@ class Orderdetails(models.Model):
     od_b = models.ForeignKey('Books', models.DO_NOTHING)
     od_amount = models.IntegerField(blank=True, null=True)
 
+    def __str__(self):
+        return u'%s %s %s' % (self.od_o, self.od_b, self.od_amount)
     class Meta:
         db_table = 'orderdetails'
         unique_together = (('od_o', 'od_b'),)

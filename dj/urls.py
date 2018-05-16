@@ -15,18 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from dj.view import hello, current_datetime,\
-     current_datetime_t, current_datetime_f, \
-     display_meta, current_datetime_r, test_extend
+import dj.view as view
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.contrib import staticfiles
+
 
 urlpatterns = [
      path('admin/', admin.site.urls),
-     path('hello/', hello),
-     path('current_datetime/', current_datetime),
-     path('current_datetime_t/', current_datetime_t),
-     path('current_datetime_f/', current_datetime_f),
-     path('current_datetime_r/', current_datetime_r),
-     path('display_meta/', display_meta),
-     path('test_extend/', test_extend),
+     path('hello/', view.hello),
+     path(r'search_form/', view.search_form),
+     path(r'search/', view.search),
+     path(r'index/', view.index),
+     path(r'index/register/', view.register)
 ]
 
+urlpatterns += staticfiles_urlpatterns()
