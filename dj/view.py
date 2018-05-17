@@ -81,13 +81,6 @@ def display_meta(request):
     for k, v in values:
         html.append('<tr><td>%s</td><td>%s</td></tr>' % (k, v))
     return HttpResponse('<table>%s</table>' % '\n'.join(html))
-    pass
-
-
-def test_extend(request):
-    now = datetime.datetime.now()
-    return render(request, 'current_datetime.html', {'current_date': now})
-    pass
 
 
 def search_form(request):
@@ -131,10 +124,36 @@ def register(request):
     return render(request, 'register.html')
 
 
-if __name__ == '__main__':
-    fp = open('./template/test.html', 'r', encoding='utf-8')
-    print(fp.read())
-    fp.close()
-    print('hhhh')
+def reg(request):
+    email = request.GET['email']
+    name = request.GET['name']
+    pw = request.GET['password']
+    sex = request.GET['sex']
+    phone = request.GET['phone']
+    address = request.GET['address']
+    question = request.GET['select']
+    answer = request.GET['answer']
+    u1 = Users(u_name=name, u_email=email, u_pw=pw, u_sex=sex, u_phone=phone, u_address=address, u_question=question, u_answer=answer)
+    u1.save()
+    return render(request, 'success.html')
+
+
+def login(request):
+    return render(request, 'login.html')
+
+
+def log(request):
+    name = request.GET['name']
+    pw = request.GET['pw']
+    books = Books.objects.order_by('b_price')[0:5]
+    try:
+        db = Users.objects.get(u_name=name)
+        if db.u_pw == pw:
+            return render(request, 'my.html', {'books': books})
+        else:
+            return HttpResponse('密码不对')
+    except:
+        return HttpResponse('用户名不存在')
     pass
+
 

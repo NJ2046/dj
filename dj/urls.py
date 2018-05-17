@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 import dj.view as view
+from django.conf.urls import url
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import staticfiles
 
@@ -26,7 +27,12 @@ urlpatterns = [
      path(r'search_form/', view.search_form),
      path(r'search/', view.search),
      path(r'index/', view.index),
-     path(r'index/register/', view.register)
+     # 注册
+     path(r'index/register/', view.register),
+     url(r'index/register/reg*', view.reg),
+     # 登陆
+     path(r'index/login/', view.login),
+     url(r'index/login/log*', view.log),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

@@ -65,6 +65,11 @@ class Users(models.Model):
     u_nickname = models.CharField(max_length=45, blank=True, null=True)
     u_creatdate = models.DateTimeField(blank=True, null=True)
     u_type = models.IntegerField(blank=True, null=True)  # This field type is a guess.
+    u_sex = models.CharField(max_length=45, blank=True, null=True)
+    u_question = models.CharField(max_length=45, blank=True, null=True)
+    u_answer = models.CharField(max_length=45, blank=True, null=True)
+    u_phone = models.CharField(max_length=45, blank=True, null=True)
+    u_email = models.CharField(max_length=45, blank=True, null=True)
 
     def __str__(self):
         return u'%s' % (self.u_name,)
