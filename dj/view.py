@@ -1,9 +1,12 @@
+# encoding: utf-8
 from django.http import HttpResponse
+from django.utils.encoding import smart_str
 from django.template.loader import get_template
 import datetime
 from django.template import Template, Context
 from django.shortcuts import render
 from django.db import connection
+from django.shortcuts import render_to_response, get_object_or_404
 import sys
 import os
 from bs.models import Users, Orders, Books
@@ -87,15 +90,15 @@ def search_form(request):
     return render(request, 'search_form.html')
 
 
-def search1(request):
-    if 'q' in request.GET:
-        message = 'You searched for %r' % request.GET['q']
+def search(request):
+    if 'q' in request.POST:
+        message = 'You searched for %r' % request.POST['q']
     else:
         message = 'You submitted an empty form'
-    return  HttpResponse(message)
+    return HttpResponse(message)
 
 
-def search(request):
+def search1(request):
     if 'q' in request.GET and request.GET['q']:
         q = request.GET['q']
         books = Books.objects.filter(b_name__icontains=q)
@@ -143,17 +146,50 @@ def login(request):
 
 
 def log(request):
-    name = request.GET['name']
-    pw = request.GET['pw']
-    books = Books.objects.order_by('b_price')[0:5]
-    try:
-        db = Users.objects.get(u_name=name)
-        if db.u_pw == pw:
-            return render(request, 'my.html', {'books': books})
-        else:
-            return HttpResponse('密码不对')
-    except:
-        return HttpResponse('用户名不存在')
-    pass
+    username = request.COOKIES.get('name', '')
+    name = request.POST['name']
+    if name != username or username:
+        books = Books.objects.order_by('b_price')[0:5]
+        return render(request, 'my.html', {'books': books})
+        pass
+    else:
+        pw = request.POST['pw']
+        books = Books.objects.order_by('b_price')[0:5]
+        try:
+            db = Users.objects.get(u_name=name)
+            if db.u_pw == pw:
+                response = render_to_response('my.html', {'books': books})
+                name = smart_str(name)
+                response.set_cookie('name', name)
+                return response
+                # return render(request, 'my.html', {'books': books})
+            else:
+                return HttpResponse('密码不对')
+        except:
+            return HttpResponse('用户名不存在')
+
+
+def modif(request):
+    username = request.COOKIES.get('name', '')
+    return render(request, 'modifyuserinfo.html', {'name': username})
+
+def mod(request):
+    username = request.COOKIES.get('name', '')
+    pw = request.POST['pw']
+    phone = request.POST['phone']
+    sex = request.POST['sex']
+    address = request.POST['address']
+    question = request.POST['select']
+    answer = request.POST['answer']
+    db = Users.objects.get(u_name=username)
+    db.u_pw = pw
+    db.u_phone = phone
+    db.u_address = address
+    db.u_question = question
+    db.u_answer = answer
+    db.u_sex = sex
+    db.save()
+    return render(request, 'mod_success.html')
+
 
 

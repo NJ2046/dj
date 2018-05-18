@@ -33,6 +33,10 @@ urlpatterns = [
      # 登陆
      path(r'index/login/', view.login),
      url(r'index/login/log*', view.log),
+     path(r'index/login/log/', view.log),
+     # 修改信息
+     path(r'modifyuserinfo/', view.modif),
+     path(r'modifyuserinfo/modif', view.mod),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
