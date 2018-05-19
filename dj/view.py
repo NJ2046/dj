@@ -1,4 +1,5 @@
 # encoding: utf-8
+from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.utils.encoding import smart_str
 from django.template.loader import get_template
@@ -9,7 +10,7 @@ from django.db import connection
 from django.shortcuts import render_to_response, get_object_or_404
 import sys
 import os
-from bs.models import Users, Orders, Books
+from bs.models import Users, Orders, Books, Orderdetails, Cart
 # noinspection PyUnusedLocal
 
 
@@ -77,15 +78,6 @@ def current_datetime_r(request):
     pass
 
 
-def display_meta(request):
-    values = request.META.items()
-    # values.sort()
-    html = list()
-    for k, v in values:
-        html.append('<tr><td>%s</td><td>%s</td></tr>' % (k, v))
-    return HttpResponse('<table>%s</table>' % '\n'.join(html))
-
-
 def search_form(request):
     return render(request, 'search_form.html')
 
@@ -142,18 +134,17 @@ def reg(request):
 
 
 def login(request):
+    username = request.COOKIES.get('name', '')
+    if username:
+        return HttpResponseRedirect('http://127.0.0.1:8000/my')
     return render(request, 'login.html')
 
 
-def log(request):
+def my(request):
     username = request.COOKIES.get('name', '')
-    name = request.POST['name']
-    if name != username or username:
-        books = Books.objects.order_by('b_price')[0:5]
-        return render(request, 'my.html', {'books': books})
-        pass
-    else:
+    if request.POST:
         pw = request.POST['pw']
+        name = request.POST['name']
         books = Books.objects.order_by('b_price')[0:5]
         try:
             db = Users.objects.get(u_name=name)
@@ -167,11 +158,43 @@ def log(request):
                 return HttpResponse('密码不对')
         except:
             return HttpResponse('用户名不存在')
+    else:
+        if username:
+            books = Books.objects.order_by('b_price')[0:5]
+            return render(request, 'my.html', {'books': books})
+    """
+    if username:
+        if request.POST:
+            name = request.POST['name']
+            if username == name:
+                books = Books.objects.order_by('b_price')[0:5]
+                return render(request, 'my.html', {'books': books})
+        else:
+            books = Books.objects.order_by('b_price')[0:5]
+            return render(request, 'my.html', {'books': books})
+    else:
+        pw = request.POST['pw']
+        name = request.POST['name']
+        books = Books.objects.order_by('b_price')[0:5]
+        try:
+            db = Users.objects.get(u_name=name)
+            if db.u_pw == pw:
+                response = render_to_response('my.html', {'books': books})
+                name = smart_str(name)
+                response.set_cookie('name', name)
+                return response
+                # return render(request, 'my.html', {'books': books})
+            else:
+                return HttpResponse('密码不对')
+        except:
+            return HttpResponse('用户名不存在')
+    """
 
 
 def modif(request):
     username = request.COOKIES.get('name', '')
     return render(request, 'modifyuserinfo.html', {'name': username})
+
 
 def mod(request):
     username = request.COOKIES.get('name', '')
@@ -192,4 +215,119 @@ def mod(request):
     return render(request, 'mod_success.html')
 
 
+def order(request):
+    username = request.COOKIES.get('name', '')
+    db = Orderdetails.objects.filter(od_o__o_u__u_name=username)
+    return render(request, 'orderlist.html', {'orders': db})
 
+
+def balance(request):
+    username = request.COOKIES.get('name', '')
+    db = Users.objects.get(u_name=username)
+    b = db.u_balance
+    return render(request, 'balance.html', {'balance': b})
+
+
+def up(request):
+    money = request.POST['money']
+    money = int(money)
+    username = request.COOKIES.get('name', '')
+    db = Users.objects.get(u_name=username)
+    db.u_balance = db.u_balance + money
+    db.save()
+    return render(request, 'up_success.html')
+
+
+def cart(request):
+    if request.POST:
+        username = request.COOKIES.get('name', '')
+        username = str(username)
+        username = username.replace(username,"'" + username + "'")
+        bkname = request.POST['bkname']
+        bkname = str(bkname)
+        bkname = bkname.replace(bkname, "'" + bkname + "'")
+        cursor = connection.cursor()
+        exe = 'delete from bs.cart where bs.cart.c_u_id in (select id from bs.bs_users where bs.bs_users.u_name = ' + username + ') and bs.cart.c_b_id in (select id from bs.bs_books where bs.bs_books.b_name = ' + bkname + ')'
+        cursor.execute(exe)
+        # Cart.objects.filter(c_u__u_name=username, c_b__b_name=bkname).delete()
+
+        return HttpResponseRedirect('http://127.0.0.1:8000/cart')
+    else:
+        username = request.COOKIES.get('name', '')
+        db = Cart.objects.filter(c_u__u_name=username)
+        amount = 0
+        for car in db:
+            amount += car.c_b.b_price * car.c_amount
+        return render(request, 'cart.html', {'carts': db, 'amount': amount})
+
+
+def del_cart(request):
+    username = request.COOKIES.get('name', '')
+    username = str(username)
+    username = username.replace(username, "'" + username + "'")
+    bkname = request.POST['bkname']
+    bkname = str(bkname)
+    bkname = bkname.replace(bkname, "'" + bkname + "'")
+    cursor = connection.cursor()
+    exe = 'delete from bs.cart where bs.cart.c_u_id in (select id from bs.bs_users where bs.bs_users.u_name = ' + username + ') and bs.cart.c_b_id in (select id from bs.bs_books where bs.bs_books.b_name = ' + bkname + ')'
+    cursor.execute(exe)
+    # Cart.objects.filter(c_u__u_name=username, c_b__b_name=bkname).delete()
+
+    return HttpResponseRedirect('http://127.0.0.1:8000/cart')
+
+
+def order(request):
+    username = request.COOKIES.get('name', '')
+    db = Cart.objects.filter(c_u__u_name=username)
+    amount = 0
+    for car in db:
+        amount += car.c_b.b_price * car.c_amount
+    u = Users.objects.get(u_name=username)
+    phone = u.u_phone
+    address = u.u_address
+    return render(request, 'order.html', {'carts': db, 'amount': amount, 'u_name': username, 'phone': phone, 'address':address})
+
+
+def final(request):
+    username = request.COOKIES.get('name', '')
+    db = Cart.objects.filter(c_u__u_name=username)
+    amount = 0
+    for car in db:
+        amount += car.c_b.b_price * car.c_amount
+    u = Users.objects.get(u_name=username)
+    phone = u.u_phone
+    address = u.u_address
+    return render(request, 'orderfinal.html', {'carts': db, 'amount': amount, 'u_name': username, 'phone': phone, 'address':address})
+
+
+def order_success(request):
+    username = request.COOKIES.get('name', '')
+    # 减少余额
+    amount = 0
+    db = Cart.objects.filter(c_u__u_name=username)
+    bkid = list()
+    num = list()
+    for car in db:
+        amount += car.c_b.b_price * car.c_amount
+        bkid.append(car.c_b.id)
+        num.append(car.c_amount)
+    u = Users.objects.get(u_name=username)
+    u_id = u.id
+    u.u_balance = u.u_balance - amount
+    u.save()
+
+    # 插入订单表
+    u1 = Orders(o_u_id=u_id, o_cost=amount)
+    u1.save()
+    oid = 'SELECT @@IDENTITY'
+    cursor = connection.cursor()
+    cursor.execute(oid)
+    row = cursor.fetchall()
+    # 获得订单主键
+    oid = row[0][0]
+    for i in range(len(bkid)):
+        sql = 'insert into bs.orderdetails(od_o_id, od_b_id, od_amount) values(' + str(oid) + ',' + str(bkid[i]) + ',' + str(num[i]) +')'
+        cursor.execute(sql)
+    # 插入订单详情表
+    return render(request, 'order_success.html')
+    pass

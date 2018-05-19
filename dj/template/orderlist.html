@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
  <head>
+  <base href="http://127.0.0.1:8000" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta content="all" name="robots" />
   <meta name="author" content="Fisher" />
@@ -45,72 +46,65 @@
    </table>
   </div>
 <div id="divpagecontent">
-  <table width="100%" border="0" cellspacing="0">
-    <tr>
-      <td width="25%"><table width="100%" border="0" cellspacing="0" style="margin-top:30px">
-        <tr>
+   <table width="100%" border="0" cellspacing="0">
+    <tbody>
+     <tr>
+      <td width="25%">
+       <table width="100%" border="0" cellspacing="0" style="margin-top:30px">
+        <tbody>
+         <tr>
           <td class="listtitle">我的帐户</td>
-        </tr>
-        <tr>
-          <td class="listtd"><img src="/static/images/miniicon.gif" width="9" height="6" />&nbsp;&nbsp;&nbsp;&nbsp;
-		  <a href="modifyuserinfo.html">用户信息修改</a></td>
-        </tr>
-
-<tr>
-          <td class="listtd"><img src="/static/images/miniicon.gif" width="9" height="6" />&nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="orderlist.html">订单查询</a></td>
-        </tr>
-<tr>
-          <td class="listtd"><img src="/static/images/miniicon.gif" width="9" height="6" />&nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="#">帐户余额</a></td>
-        </tr>
-<tr>
-          <td class="listtd"><img src="/static/images/miniicon.gif" width="9" height="6" />&nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="#">我的收藏</a></td>
-        </tr>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      </table></td>
-      <td><div style="text-align:right; margin:5px 10px 5px 0px"><a href="index/">首页</a>&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;<a href="my.html">&nbsp;我的帐户</a>&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;修改成功</div>
-
-
-
-
-
-        <table cellspacing="0" class="infocontent">
-        <tr>
-          <td style="padding:20px; text-align:center"><table width="70%" border="0" cellspacing="0" style="margin-top:70px">
-            <tr>
-              <td style="width:98"><img src="/static/images/success.gif" width="98" height="119" /></td>
-              <td style="padding-top:30px"><font style="font-weight:bold; color:#FF0000">您的用户信息修改成功！</font><br />
-                <br />
-                <a href="http://127.0.0.1:8000/index/login/log">返回我的帐户</a></td>
-            </tr>
-          </table>
-            <p>&nbsp;</p>
-            </td>
-        </tr>
-      </table>
-
-
-	  </td>
-    </tr>
-  </table>
-</div>
+         </tr>
+         <tr>
+          <td class="listtd"><img src="/static/images/miniicon.gif" width="9" height="6" />&nbsp;&nbsp;&nbsp;&nbsp; <a href="modifyuserinfo">用户信息修改</a></td>
+         </tr>
+         <tr>
+          <td class="listtd"><img src="/static/images/miniicon.gif" width="9" height="6" />&nbsp;&nbsp;&nbsp;&nbsp; <a href="orderlist">订单查询</a></td>
+         </tr>
+         <tr>
+          <td class="listtd"><img src="/static/images/miniicon.gif" width="9" height="6" />&nbsp;&nbsp;&nbsp;&nbsp; <a href="news.html">帐户余额</a></td>
+         </tr>
+         <tr>
+          <td class="listtd"><img src="/static/images/miniicon.gif" width="9" height="6" />&nbsp;&nbsp;&nbsp;&nbsp; <a href="news.html">我的收藏</a></td>
+         </tr>
+        </tbody>
+       </table></td>
+      <td>
+       <div style="text-align:right; margin:5px 10px 5px 0px">
+        <a href="index/">首页</a>&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;
+        <a href="my.html">&nbsp;我的帐户</a>&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;订单查询
+       </div>
+       <table cellspacing="0" class="infocontent">
+        <tbody>
+         <tr>
+          <td style="padding:20px"><p>欢迎光临网上书店</p>
+           <table width="100%" border="0" cellspacing="0" class="tableopen">
+            <tbody>
+             <tr>
+              <td bgcolor="#A3E6DF" class="tableopentd01">订单号</td>
+              <td bgcolor="#A3E2E6" class="tableopentd01">订单内容</td>
+              <td bgcolor="#A3D7E6" class="tableopentd01">收件人</td>
+              <td bgcolor="#A3CCE6" class="tableopentd01">订单时间</td>
+              <td bgcolor="#A3B6E6" class="tableopentd01">状态</td>
+             </tr>
+             {% for order in orders %}
+             <tr>
+              <td class="tableopentd02">{{ order.od_o.o_code }}</td>
+              <td class="tableopentd02"><a href="info.html">{{ order.od_b.b_name }} </a></td>
+              <td class="tableopentd02">{{ order.od_o.o_u.u_name }}</td>
+              <td class="tableopentd02">{{ order.od_o.o_createdate }}</td>
+              <td class="tableopentd03">{{order.od_o.o_state }}</td>
+             </tr>
+             {% endfor %}
+            </tbody>
+           </table></td>
+         </tr>
+        </tbody>
+       </table> </td>
+     </tr>
+    </tbody>
+   </table>
+  </div>
   <div id="divfoot">
    <table width="100%" border="0" cellspacing="0">
     <tbody>

@@ -64,12 +64,13 @@ class Users(models.Model):
     u_address = models.CharField(max_length=100, blank=True, null=True)
     u_nickname = models.CharField(max_length=45, blank=True, null=True)
     u_creatdate = models.DateTimeField(blank=True, null=True)
-    u_type = models.IntegerField(blank=True, null=True)  # This field type is a guess.
+    u_type = models.CharField(max_length=45, blank=True, null=True)
     u_sex = models.CharField(max_length=45, blank=True, null=True)
     u_question = models.CharField(max_length=45, blank=True, null=True)
     u_answer = models.CharField(max_length=45, blank=True, null=True)
     u_phone = models.CharField(max_length=45, blank=True, null=True)
     u_email = models.CharField(max_length=45, blank=True, null=True)
+    u_balance = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return u'%s' % (self.u_name,)
@@ -116,3 +117,20 @@ class Orderdetails(models.Model):
     class Meta:
         db_table = 'orderdetails'
         unique_together = (('od_o', 'od_b'),)
+
+
+class Cart(models.Model):
+    c_u = models.ForeignKey('Users', models.DO_NOTHING, primary_key=True)
+    c_b = models.ForeignKey(Books, models.DO_NOTHING)
+    c_amount = models.IntegerField(blank=True, null=True)
+    c_createdate = models.DateTimeField(blank=True, null=True)
+
+    def __str__(self):
+        return u'%s %s %s' % (self.c_u, self.c_b, self.c_amount)
+
+    class Meta:
+        managed = False
+        db_table = 'cart'
+        unique_together = (('c_u', 'c_b'),)
+
+

@@ -1,6 +1,12 @@
 from django.contrib import admin
-from .models import Users, Books, Classes, Orderdetails, Orders
+from .models import Users, Books, Classes, Orderdetails, Orders, Cart
 # Register your models here.
+
+
+class MyAdminSite(admin.AdminSite):
+    site_header = '网上书店后台管理'
+    site_title = '刘哲均网上书店管理系统'
+
 
 
 class UsersAdmin(admin.ModelAdmin):
@@ -28,8 +34,19 @@ class OrderdetailsAdmin(admin.ModelAdmin):
     search_fields = ('od_o__o_u__u_name',)
 
 
+class CartAdmin(admin.ModelAdmin):
+    list_display = ('c_u', 'c_b', 'c_amount')
+    search_fields = ('c_u__u_name', 'c_b__b_name')
+
+
+
+
 admin.site.register(Users, UsersAdmin)
 admin.site.register(Books, BooksAdmin)
 admin.site.register(Classes, ClassAdmin)
 admin.site.register(Orderdetails, OrderdetailsAdmin)
 admin.site.register(Orders, OrdersAdmin)
+admin.site.register(Cart, CartAdmin)
+
+admin.site.site_header = '网上书店后台管理'
+admin.site.site_title = '刘哲均_2018_毕业设计'

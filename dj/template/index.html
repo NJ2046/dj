@@ -1,6 +1,7 @@
 ﻿<!doctype html>
 <html>
 <head>
+	<base href="http://127.0.0.1:8000/" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta content="all" name="robots" />
 <meta name="author" content="Fisher" />
@@ -45,12 +46,12 @@
 	<div id="divhead">
 		<table cellspacing="0" class="headtable">
 			<tr>
-				<td><a href="index"><img src="/static/images/logo.jpg"
-						width="120" height="90" border="0" /></a></td>
+				<td><a href="index"><img src="/static/images/logo.gif"
+						width="95" height="30" border="0" /></a></td>
 				<td style="text-align: right"><img src="/static/images/cart.gif"
 					width="26" height="23" style="margin-bottom: -4px" />&nbsp; <a
-					href="cart">购物车</a> | <a href="#">帮助中心</a> | <a
-					href="login">我的帐户</a> | <a href="register">新用户注册</a></td>
+					href="http://127.0.0.1:8000/cart/">购物车</a> | <a
+					href="http://127.0.0.1:8000/login/">我的帐户</a> | <a href="http://127.0.0.1:8000/register/">新用户注册</a></td>
 			</tr>
 		</table>
 	</div>
@@ -60,11 +61,12 @@
 	<div id="divsearch">
 		<table width="100%" border="0" cellspacing="0">
 			<tr>
+				<form action="search/" method="post">
 				<td style="text-align: right; padding-right: 220px">Search <input
-					type="text" name="textfield" class="inputtable" /> <!--<input name="searchbutton" type="image" src="/static/images/serchbutton.gif" style=" margin-bottom:-4px"/>-->
-					<a href="page/search.html"><img src="/static/images/serchbutton.gif"
-						border="0" style="margin-bottom: -4px" /></a>
+					type="text" name="bkname" class="inputtable" /> <!--<input name="searchbutton" type="image" src="/static/images/serchbutton.gif" style=" margin-bottom:-4px"/>-->
+					<input type="image" src="/static/images/serchbutton.gif" border="0" style="margin-bottom: -4px" />
 				</td>
+				</form>
 			</tr>
 		</table>
 	</div>

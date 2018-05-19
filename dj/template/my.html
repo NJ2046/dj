@@ -1,131 +1,111 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-<base href="/bookshop/"/>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta content="all" name="robots"/>
-<meta name="author" content="Fisher" />
-<meta name="Copyright" content="Copyright 2007-2008, 版权所有 www.reefdesign.cn" />
-<meta name="description" content="reefdesign" />
-<meta name="keywords" content="reefdesign" />
-<title>电子书城</title>
-<link rel="shortcut icon" href="favicon.ico" >
-<link rel="stylesheet" rev="stylesheet" href="/static/css/style.css" type="text/css" media="all" />
-</head>
-
-<body class="main">
-
+ <head>
+  <base href="http://127.0.0.1:8000" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta content="all" name="robots" />
+  <meta name="author" content="Fisher" />
+  <meta name="Copyright" content="Copyright 2007-2008, 版权所有 www.reefdesign.cn" />
+  <meta name="description" content="reefdesign" />
+  <meta name="keywords" content="reefdesign" />
+  <title>电子书城</title>
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" rev="stylesheet" href="/static/css/style.css" type="text/css" media="all" />
+ </head>
+ <body class="main">
 	<div id="divhead">
 		<table cellspacing="0" class="headtable">
 			<tr>
-				<td><a href="index.html"><img src="/static/images/logo.gif"
+				<td><a href="index"><img src="/static/images/logo.gif"
 						width="95" height="30" border="0" /></a></td>
 				<td style="text-align: right"><img src="/static/images/cart.gif"
 					width="26" height="23" style="margin-bottom: -4px" />&nbsp; <a
-					href="page/cart.html">购物车</a> | <a href="#">帮助中心</a> | <a
-					href="page/login.html">我的帐户</a> | <a href="page/register.html">新用户注册</a></td>
+					href="http://127.0.0.1:8000/cart/">购物车</a> | <a
+					href="http://127.0.0.1:8000/login/">我的帐户</a> | <a href="http://127.0.0.1:8000/register/">新用户注册</a></td>
 			</tr>
 		</table>
 	</div>
-
-<div id="divmenu">
-<a href="index.html">首页</a>　　<a href="product_list.html">科学技术</a>　　<a href="product_list.html">文学小说</a>　　<a href="product_list.html">人文社科</a>　　<a href="product_list.html">艺术设计</a>　　<a href="product_list.html">经管励志</a>　　<a href="product_list.html">军事历史</a>　　　　<a href="product_list.html" style="color:#FFFF00">全部商品目录</a></div><div id="divsearch"><table width="100%" border="0" cellspacing="0">
-  <tr>
-    <td style="text-align:right; padding-right:220px">Search
-  <input type="text" name="textfield" class="inputtable"/>
-<!--<input name="searchbutton" type="image" src="/static/images/serchbutton.gif" style=" margin-bottom:-4px"/>-->
-<a href="search.html"><img src="/static/images/serchbutton.gif" border="0" style="margin-bottom:-4px"/></a></td>
-  </tr>
-</table>
-
-</div>
-
-
-<div id="divpagecontent">
-  <table width="100%" border="0" cellspacing="0">
-    <tr>
-      <td width="25%"><table width="100%" border="0" cellspacing="0" style="margin-top:30px">
-        <tr>
+  <div id="divmenu">
+   <a href="index/">首页</a>　　
+   <a href="product_list.html">科学技术</a>　　
+   <a href="product_list.html">文学小说</a>　　
+   <a href="product_list.html">人文社科</a>　　
+   <a href="product_list.html">艺术设计</a>　　
+   <a href="product_list.html">经管励志</a>　　
+   <a href="product_list.html">军事历史</a>　　　　
+   <a href="product_list.html" style="color:#FFFF00">全部商品目录</a>
+  </div>
+  <div id="divsearch">
+   <table width="100%" border="0" cellspacing="0">
+    <tbody>
+     <tr>
+      <td style="text-align:right; padding-right:220px">Search <input type="text" name="textfield" class="inputtable" />
+       <!--<input name="searchbutton" type="image" src="/static/images/serchbutton.gif" style=" margin-bottom:-4px"/>--> <a href="search.html"><img src="/static/images/serchbutton.gif" border="0" style="margin-bottom:-4px" /></a></td>
+     </tr>
+    </tbody>
+   </table>
+  </div>
+  <div id="divpagecontent">
+   <table width="100%" border="0" cellspacing="0">
+    <tbody>
+     <tr>
+      <td width="25%">
+       <table width="100%" border="0" cellspacing="0" style="margin-top:30px">
+        <tbody>
+         <tr>
           <td class="listtitle">我的帐户</td>
-        </tr>
-        <tr>
-          <td class="listtd"><img src="/static/images/miniicon.gif" width="9" height="6" />&nbsp;&nbsp;&nbsp;&nbsp;
-		  <a href="http://127.0.0.1:8000/modifyuserinfo/">用户信息修改</a></td>
-        </tr>
-		
-<tr>
-          <td class="listtd"><img src="/static/images/miniicon.gif" width="9" height="6" />&nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="orderlist.html">订单查询</a></td>
-        </tr>
-<tr>
-          <td class="listtd"><img src="/static/images/miniicon.gif" width="9" height="6" />&nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="news.html">帐户余额</a></td>
-        </tr>
-<tr>
-          <td class="listtd"><img src="/static/images/miniicon.gif" width="9" height="6" />&nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="news.html">我的收藏</a></td>
-        </tr>
-
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-      </table></td>
-      <td><div style="text-align:right; margin:5px 10px 5px 0px"><a href="index.html">首页</a>&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;<a href="my.html">&nbsp;我的帐户</a>&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;欢迎</div>
-        
-		
-		
-		
-
-        <table cellspacing="0" class="infocontent">
-						<tbody>
-                        <tr>
-							<td><img src="/static/images/guessyoulike.png" width="126" height="49"></td>
-						</tr>
-                        <tr>
-                            {% for book in books %}
-							<td style="width: 50; text-align: center"><a
+         </tr>
+         <tr>
+          <td class="listtd"><img src="/static/images/miniicon.gif" width="9" height="6" />&nbsp;&nbsp;&nbsp;&nbsp; <a href="modifyuserinfo">用户信息修改</a></td>
+         </tr>
+         <tr>
+          <td class="listtd"><img src="/static/images/miniicon.gif" width="9" height="6" />&nbsp;&nbsp;&nbsp;&nbsp; <a href="orderlist">订单查询</a></td>
+         </tr>
+         <tr>
+          <td class="listtd"><img src="/static/images/miniicon.gif" width="9" height="6" />&nbsp;&nbsp;&nbsp;&nbsp; <a href="balance">帐户余额</a></td>
+         </tr>
+         <tr>
+          <td class="listtd"><img src="/static/images/miniicon.gif" width="9" height="6" />&nbsp;&nbsp;&nbsp;&nbsp; <a href="news.html">我的收藏</a></td>
+         </tr>
+        </tbody>
+       </table></td>
+      <td>
+       <div style="text-align:right; margin:5px 10px 5px 0px">
+        <a href="index/">首页</a>&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;
+        <a href="my.html">&nbsp;我的帐户</a>&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;欢迎
+       </div>
+       <table cellspacing="0" class="infocontent">
+        <tbody>
+         <tr>
+          <td><img src="/static/images/guessyoulike.png" width="126" height="49" /></td>
+         </tr>
+         <tr>
+          {% for book in books %}
+             <td style="width: 50; text-align: center"><a
 								href="page/info.html"><img src={{ book.b_cover }}
 									width="102" height="130" border="0" /></a><br /> <a
 								href="page/info.html">{{ book.b_name }}<br /> {{ book.b_writer }}
 							</a></td>
-                            {% endfor %}
-						</tr>
-					<</table>
-      </table>
-	  
-	  
-	  </td>
-    </tr>
-  </table>
-</div>
-
-
-
-<div id="divfoot">
-  <table width="100%" border="0" cellspacing="0">
-    <tr>
-      <td rowspan="2" style="width:10%"><img src="/static/images/bottomlogo.gif" width="195" height="50" style="margin-left:175px"/></td>
+          {% endfor %}
+         </tr> &lt;
+        </tbody>
+       </table> </td>
+     </tr>
+    </tbody>
+   </table>
+  </div>
+  <div id="divfoot">
+   <table width="100%" border="0" cellspacing="0">
+    <tbody>
+     <tr>
+      <td rowspan="2" style="width:10%"><img src="/static/images/bottomlogo.gif" width="195" height="50" style="margin-left:175px" /></td>
       <td style="padding-top:5px; padding-left:50px"><a href="#"><font color="#747556"><b>CONTACT US</b></font></a></td>
-    </tr>
-    <tr>
+     </tr>
+     <tr>
       <td style="padding-left:50px"><font color="#CCCCCC"><b>COPYRIGHT 2008 &copy; eShop All Rights RESERVED.</b></font></td>
-    </tr>
-  </table>
-</div>
-
-
-</body>
+     </tr>
+    </tbody>
+   </table>
+  </div>
+ </body>
 </html>

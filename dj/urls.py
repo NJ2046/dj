@@ -28,15 +28,30 @@ urlpatterns = [
      path(r'search/', view.search),
      path(r'index/', view.index),
      # 注册
-     path(r'index/register/', view.register),
-     url(r'index/register/reg*', view.reg),
+     path(r'register/', view.register),
+     url(r'reg', view.reg),
      # 登陆
-     path(r'index/login/', view.login),
-     url(r'index/login/log*', view.log),
-     path(r'index/login/log/', view.log),
+     path(r'login/', view.login),
+     path(r'my/', view.my),
      # 修改信息
      path(r'modifyuserinfo/', view.modif),
      path(r'modifyuserinfo/modif', view.mod),
+     # 订单查询
+     path(r'orderlist/', view.order),
+     # 账户余额
+     path(r'balance/', view.balance),
+     # 充值
+     path(r'up/', view.up),
+
+     # 购物车
+     path(r'cart/', view.cart),
+     path(r'del_cart/', view.del_cart),
+
+     # 订单
+     path(r'order/', view.order),
+     path(r'orderfinal/', view.final),
+     path(r'ordersucess/', view.order_success),
+
 ]
 
 urlpatterns += staticfiles_urlpatterns()
