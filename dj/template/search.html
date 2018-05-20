@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <base href="http://127.0.0.1:8000/search" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta content="all" name="robots" />
+  <meta name="author" content="Fisher" />
+  <meta name="Copyright" content="Copyright 2007-2008, 版权所有 www.reefdesign.cn" />
+  <meta name="description" content="reefdesign" />
+  <meta name="keywords" content="reefdesign" />
+  <title>刘哲均_2018_毕计</title>
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" rev="stylesheet" href="/static/css/style.css" type="text/css" media="all" />
+ </head>
+ <body class="main">
+  <div id="divhead">
+   <table cellspacing="0" class="headtable">
+    <tbody>
+     <tr>
+      <td><a href="index/"><img src="/static/images/logo.gif" width="95" height="30" border="0" /></a></td>
+      <td style="text-align: right"><img src="/static/images/cart.gif" width="26" height="23" style="margin-bottom: -4px" />&nbsp; <a href="cart/">购物车</a> | <a href="login/">我的帐户</a> | <a href="register/">新用户注册</a></td>
+     </tr>
+    </tbody>
+   </table>
+  </div>
+<div id="divmenu">
+<a href="index/">首页</a>　　<a href="fiction/">小说</a>　　<a href="literature/">文学</a>　　<a href="textbook/">教材</a>　　<a href="youth/">青春</a>　　<a href="biography/">传记</a>　　<a href="history/">历史</a>　　　　<a href="books/" style="color:#FFFF00">全部图书</a></div>
+	<div id="divsearch">
+		<table width="100%" border="0" cellspacing="0">
+			<tr>
+				<form action="search/" method="post">
+				<td style="text-align: right; padding-right: 220px">Search <input
+					type="text" name="bkname" class="inputtable" /> <!--<input name="searchbutton" type="image" src="/static/images/serchbutton.gif" style=" margin-bottom:-4px"/>-->
+					<input type="image" src="/static/images/serchbutton.gif" border="0" style="margin-bottom: -4px" />
+				</td>
+				</form>
+			</tr>
+		</table>
+	</div>
+  <div id="divpagecontent">
+   <table width="100%" border="0" cellspacing="0">
+    <tbody>
+     <tr>
+      <td width="10%">
+      </td>
+      <td>
+       <div style="text-align:right; margin:5px 10px 5px 0px">
+        <a href="index/">首页</a>&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;搜索内容
+       </div>
+       <table cellspacing="0" class="infocontent">
+        <tbody>
+         <tr>
+          <td>
+           <table width="100%" border="0" cellspacing="0">
+            <tbody>
+             <tr>
+              <td style="padding:10px"> 以下 <strong>{{tot}}</strong> 条结果 <strong>随机</strong> 排列　每页显示<strong>5</strong>条
+               <hr />
+                 {% for book in contacts %}
+               <table border="0" cellspacing="0" class="searchtable">
+                <tbody>
+                 <tr>
+                  <td width="20%" rowspan="2">
+                   <div class="divbookpic">
+                    <p><a href="http://127.0.0.1:8000/infor/?bk_name={{ book.b_name }}"><img src= "/static/cover/{{ book.b_cover|slice:'48:' }}" width="115" height="129" border="0" /></a></p>
+                   </div></td>
+                  <td colspan="2"><font class="bookname">{{book.b_name}}</font><br />作者：{{book.b_writer}} 著<br /> 　{{book.b_ps|slice:':100'}}......</td>
+                 </tr>
+                 <tr>
+                  <td>售价：<font color="#FF0000">￥ {{book.b_price}}</font>&nbsp;&nbsp;&nbsp;&nbsp;
+                   </td>
+                  <td style="text-align:right"><a href="http://127.0.0.1:8000/add_cart?bk_id={{ book.id }}"><img src="/static/images/buy.gif" width="91" height="27" border="0" style="margin-bottom:-8px" /></a></td>
+                 </tr>
+                </tbody>
+               </table>
+               {% endfor %}
+          <div class="pagination">
+           <span class="step-links">
+           {% if contacts.has_previous %}
+            <a href="?page={{ contacts.previous_page_number }}">上一页</a>
+            {% endif %}
+            <span class="current">
+              第 {{ contacts.number }} 页， 共 {{ contacts.paginator.num_pages }}.
+           </span>
+            {% if contacts.has_next %}
+             <a href="?page={{ contacts.next_page_number }}">下一页</a>
+            {% endif %}
+          </span>
+          </div>
+              </td>
+             </tr>
+            </tbody>
+           </table></td>
+         </tr>
+        </tbody>
+       </table> </td>
+     </tr>
+    </tbody>
+   </table>
+  </div>
+  <div id="divfoot">
+   <table width="100%" border="0" cellspacing="0">
+    <tbody>
+     <tr>
+      <td rowspan="2" style="width:10%"><img src="/static/images/bottomlogo.gif" width="195" height="50" style="margin-left:175px" /></td>
+      <td style="padding-top:5px; padding-left:50px"><a href="#"><font color="#747556"><b>CONTACT US</b></font></a></td>
+     </tr>
+     <tr>
+      <td style="padding-left:50px"><font color="#CCCCCC"><b>COPYRIGHT 2008 &copy; eShop All Rights RESERVED.</b></font></td>
+     </tr>
+    </tbody>
+   </table>
+  </div>
+ </body>
+</html>

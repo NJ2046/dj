@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
  <head>
-  <base href="http://127.0.0.1:8000" />
+  <base href="http://127.0.0.1:8000/{{c_e_name}}" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta content="all" name="robots" />
   <meta name="author" content="Fisher" />
@@ -13,21 +13,19 @@
   <link rel="stylesheet" rev="stylesheet" href="/static/css/style.css" type="text/css" media="all" />
  </head>
  <body class="main">
-	<div id="divhead">
-		<table cellspacing="0" class="headtable">
-			<tr>
-				<td><a href="index"><img src="/static/images/logo.gif"
-						width="95" height="30" border="0" /></a></td>
-				<td style="text-align: right"><img src="/static/images/cart.gif"
-					width="26" height="23" style="margin-bottom: -4px" />&nbsp; <a
-					href="http://127.0.0.1:8000/cart/">购物车</a> | <a
-					href="http://127.0.0.1:8000/login/">我的帐户</a> | <a href="http://127.0.0.1:8000/register/">新用户注册</a></td>
-			</tr>
-		</table>
-	</div>
+  <div id="divhead">
+   <table cellspacing="0" class="headtable">
+    <tbody>
+     <tr>
+      <td><a href="index/"><img src="/static/images/logo.gif" width="95" height="30" border="0" /></a></td>
+      <td style="text-align: right"><img src="/static/images/cart.gif" width="26" height="23" style="margin-bottom: -4px" />&nbsp; <a href="cart/">购物车</a> | <a href="login/">我的帐户</a> | <a href="register/">新用户注册</a></td>
+     </tr>
+    </tbody>
+   </table>
+  </div>
 <div id="divmenu">
 <a href="index/">首页</a>　　<a href="fiction/">小说</a>　　<a href="literature/">文学</a>　　<a href="textbook/">教材</a>　　<a href="youth/">青春</a>　　<a href="biography/">传记</a>　　<a href="history/">历史</a>　　　　<a href="books/" style="color:#FFFF00">全部图书</a></div>
-	<div id="divsearch">
+ 	<div id="divsearch">
 		<table width="100%" border="0" cellspacing="0">
 			<tr>
 				<form action="search/" method="post">
@@ -43,44 +41,58 @@
    <table width="100%" border="0" cellspacing="0">
     <tbody>
      <tr>
-      <td width="25%">
+      <td width="10%">
        <table width="100%" border="0" cellspacing="0" style="margin-top:30px">
-        <tbody>
-         <tr>
-          <td class="listtitle">我的帐户</td>
-         </tr>
-         <tr>
-          <td class="listtd"><img src="/static/images/miniicon.gif" width="9" height="6" />&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://127.0.0.1:8000/modifyuserinfo/">用户信息修改</a></td>
-         </tr>
-         <tr>
-          <td class="listtd"><img src="/static/images/miniicon.gif" width="9" height="6" />&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://127.0.0.1:8000/orderlist/">订单查询</a></td>
-         </tr>
-         <tr>
-          <td class="listtd"><img src="/static/images/miniicon.gif" width="9" height="6" />&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://127.0.0.1:8000/balance/">帐户余额</a></td>
-         </tr>
-        </tbody>
+
        </table></td>
       <td>
        <div style="text-align:right; margin:5px 10px 5px 0px">
-        <a href="index/">首页</a>&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;
-        <a href="my">&nbsp;我的帐户</a>&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;欢迎
+        <a href="index/">首页</a>&nbsp;&nbsp;&nbsp;&nbsp;&gt;&nbsp;&nbsp;&nbsp;&nbsp;图书列表
        </div>
-       <table cellspacing="0" class="infocontent">
+       <table cellspacing="0" class="listcontent">
         <tbody>
          <tr>
-          <td><img src="/static/images/guessyoulike.png" width="126" height="49" /></td>
+           <hr /><h1>{{c_name}}</h1>&nbsp;&nbsp;&nbsp;&nbsp;共{{tot}}种图书
+           <hr /> <img src="/static/images/miniicon2.gif" />
+           <div style="margin-top:20px; margin-bottom:5px">
+            <img src="/static/images/productlist.gif" width="631" height="38" />
+           </div>
+
+           <table cellspacing="0" class="booklist">
+            <tbody>
+             <tr style="margin-left: -10px;">
+
+              <td>
+                  {% for book in contacts %}
+                <div style="width: 100%;">
+                	<div style="width: 20%;box-sizing: border-box;padding: 10px;float: left;left:-10px;"><a href="http://127.0.0.1:8000/infor/?bk_name={{ book.b_name }}"><img src="/static/cover/{{ book.b_cover|slice:'48:' }}" width="102" height="129" border="0" /></a><p>{{book.b_name}}</p><p>￥ {{book.b_price}}</p></div>
+                </div>
+                   {% endfor %}
+               <div class="divlisttitle"style="clear: both;">
+
+               </div></td>
+
+             </tr>
+            </tbody>
+           </table>
+
+          <div class="pagination">
+           <span class="step-links">
+           {% if contacts.has_previous %}
+            <a href="?page={{ contacts.previous_page_number }}">上一页</a>
+            {% endif %}
+            <span class="current">
+              第 {{ contacts.number }}页， 共 {{ contacts.paginator.num_pages }}.
+           </span>
+            {% if contacts.has_next %}
+             <a href="?page={{ contacts.next_page_number }}">下一页</a>
+            {% endif %}
+          </span>
+          </div>
+          </td>
          </tr>
-         <tr>
-          {% for book in books %}
-             <td style="width: 50; text-align: center"><a
-								href="http://127.0.0.1:8000/infor?bk_name={{ book.b_name }}"><img src="/static/cover/{{ book.b_cover|slice:'48:' }}"
-									width="102" height="130" border="0" /></a><br /> <a
-								href="page/info.html">{{ book.b_name }}<br /> {{ book.b_writer }}
-							</a></td>
-          {% endfor %}
-         </tr> &lt;
         </tbody>
-       </table> </td>
+       </table></td>
      </tr>
     </tbody>
    </table>

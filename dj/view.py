@@ -1,10 +1,8 @@
 # encoding: utf-8
 from django.http import HttpResponseRedirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 from django.utils.encoding import smart_str
-from django.template.loader import get_template
-import datetime
-from django.template import Template, Context
 from django.shortcuts import render
 from django.db import connection
 from django.shortcuts import render_to_response, get_object_or_404
@@ -42,59 +40,190 @@ def hello(request):
     return HttpResponse(name)
 
 
-def current_datetime(request):
-    now = datetime.datetime.now()
-    html = '<html><body>It is now %s</body></html>' % now
-    return HttpResponse(html)
+def book_info(request):
+    if request.GET['bk_name']:
+        name = request.GET['bk_name']
+        bkinfor = Books.objects.get(b_name=name)
 
-
-def current_datetime_t(requset):
-    now = datetime.datetime.now()
-    t = Template('<html><body>It is now {{current_date}}</body></html>')
-    html = t.render(Context({'current_date': now}))
-    return HttpResponse(html)
-
-
-def current_datetime_f(request):
-    """
-    打开文件加载
-    fp = open('C:\\Users\\NJ\\PycharmProjects\\dj\\dj\\template\\test.html', 'r', encoding='utf-8')
-    t = Template(fp.read())
-    fp.close()
-    now = datetime.datetime.now()
-    html = t.render(Context({'current_date': now}))
-    """
-    now = datetime.datetime.now()
-    t = get_template('test.html')
-    d =dict()
-    d['current_date'] = now
-    html = t.render(Context(d))
-    return HttpResponse(html)
-
-# 最简单，可取
-def current_datetime_r(request):
-    now = datetime.datetime.now()
-    return render(request, 'test.html', {'current_date': now})
+        return render(request, 'info.html', {'bkinfor': bkinfor})
+        pass
+    else:
+        pass
     pass
 
 
-def search_form(request):
-    return render(request, 'search_form.html')
+def all_book(request):
+    books = Books.objects.all()
+    c_e_name = 'books'
+    c_name = '所有类别'
+    tot = len(books)
+    paginator = Paginator(books, 15)
+    try:
+        page = request.GET['page']
+    except:
+        page = 1
+    try:
+        book = paginator.page(page)
+    except PageNotAnInteger:
+        book = paginator.page(1)
+    except EmptyPage:
+        book = paginator.page(paginator.num_pages)
+    return render(request, 'product_list.html', {'contacts': book, 'tot': tot, 'c_name': c_name, 'c_e_name': c_e_name})
+
+
+def fiction(request):
+    books = Books.objects.filter(b_class__id=4)
+    c_e_name = 'fiction'
+    c_name = '小说'
+    tot = len(books)
+    paginator = Paginator(books, 15)
+    try:
+        page = request.GET['page']
+    except:
+        page = 1
+    try:
+        book = paginator.page(page)
+    except PageNotAnInteger:
+        book = paginator.page(1)
+    except EmptyPage:
+        book = paginator.page(paginator.num_pages)
+    return render(request, 'product_list.html', {'contacts': book, 'tot': tot, 'c_name': c_name, 'c_e_name': c_e_name})
+
+
+def literature(request):
+    books = Books.objects.filter(b_class__id=3)
+    c_e_name = 'literature'
+    c_name = '文化'
+    tot = len(books)
+    paginator = Paginator(books, 15)
+    try:
+        page = request.GET['page']
+    except:
+        page = 1
+    try:
+        book = paginator.page(page)
+    except PageNotAnInteger:
+        book = paginator.page(1)
+    except EmptyPage:
+        book = paginator.page(paginator.num_pages)
+    return render(request, 'product_list.html', {'contacts': book, 'tot': tot, 'c_name': c_name, 'c_e_name': c_e_name})
+
+
+def textbook(request):
+    books = Books.objects.filter(b_class__id=2)
+    c_e_name = 'textbook'
+    c_name = '教材'
+    tot = len(books)
+    paginator = Paginator(books, 15)
+    try:
+        page = request.GET['page']
+    except:
+        page = 1
+    try:
+        book = paginator.page(page)
+    except PageNotAnInteger:
+        book = paginator.page(1)
+    except EmptyPage:
+        book = paginator.page(paginator.num_pages)
+    return render(request, 'product_list.html', {'contacts': book, 'tot': tot, 'c_name': c_name, 'c_e_name': c_e_name})
+
+
+def youth(request):
+    books = Books.objects.filter(b_class__id=5)
+    c_e_name = 'youth'
+    c_name = '青春'
+    tot = len(books)
+    paginator = Paginator(books, 15)
+    try:
+        page = request.GET['page']
+    except:
+        page = 1
+    try:
+        book = paginator.page(page)
+    except PageNotAnInteger:
+        book = paginator.page(1)
+    except EmptyPage:
+        book = paginator.page(paginator.num_pages)
+    return render(request, 'product_list.html', {'contacts': book, 'tot': tot, 'c_name': c_name, 'c_e_name': c_e_name})
+
+
+def biography(request):
+    books = Books.objects.filter(b_class__id=6)
+    c_e_name = 'biography'
+    c_name = '传记'
+    tot = len(books)
+    paginator = Paginator(books, 15)
+    try:
+        page = request.GET['page']
+    except:
+        page = 1
+    try:
+        book = paginator.page(page)
+    except PageNotAnInteger:
+        book = paginator.page(1)
+    except EmptyPage:
+        book = paginator.page(paginator.num_pages)
+    return render(request, 'product_list.html', {'contacts': book, 'tot': tot, 'c_name': c_name, 'c_e_name': c_e_name})
+
+
+def history(request):
+    books = Books.objects.filter(b_class__id=8)
+    c_e_name = 'history'
+    c_name = '历史'
+    tot = len(books)
+    paginator = Paginator(books, 15)
+    try:
+        page = request.GET['page']
+    except:
+        page = 1
+    try:
+        book = paginator.page(page)
+    except PageNotAnInteger:
+        book = paginator.page(1)
+    except EmptyPage:
+        book = paginator.page(paginator.num_pages)
+    return render(request, 'product_list.html', {'contacts': book, 'tot': tot, 'c_name': c_name, 'c_e_name': c_e_name})
 
 
 def search(request):
-    if 'q' in request.POST:
-        message = 'You searched for %r' % request.POST['q']
+    if 'bkname' in request.POST:
+        bkname = request.POST['bkname']
+        books = Books.objects.filter(b_name__contains=bkname)
+        tot = len(books)
+        paginator = Paginator(books, 5)
+        try:
+            page = request.GET['page']
+        except:
+            page = 1
+        try:
+            book = paginator.page(page)
+        except PageNotAnInteger:
+            book = paginator.page(1)
+        except EmptyPage:
+            book = paginator.page(paginator.num_pages)
+        response = render_to_response('search.html', {'contacts': book, 'tot': tot})
+        name = smart_str(bkname)
+        response.set_cookie('bkname', name)
+        return response
+    elif request.COOKIES.get('bkname', ''):
+        bkname = request.COOKIES.get('bkname', '')
+        if request.GET['page']:
+            books = Books.objects.filter(b_name__contains=bkname)
+            tot = len(books)
+            paginator = Paginator(books, 5)
+            try:
+                page = request.GET['page']
+            except:
+                page = 1
+            try:
+                book = paginator.page(page)
+            except PageNotAnInteger:
+                book = paginator.page(1)
+            except EmptyPage:
+                book = paginator.page(paginator.num_pages)
+        return render(request, 'search.html', {'contacts': book, 'tot': tot})
     else:
-        message = 'You submitted an empty form'
-    return HttpResponse(message)
-
-
-def search1(request):
-    if 'q' in request.GET and request.GET['q']:
-        q = request.GET['q']
-        books = Books.objects.filter(b_name__icontains=q)
-        return render(request, 'search_results.html', {'books': books, 'query': q})
+        pass
 
 
 def index(request):
@@ -215,7 +344,7 @@ def mod(request):
     return render(request, 'mod_success.html')
 
 
-def order(request):
+def search_order(request):
     username = request.COOKIES.get('name', '')
     db = Orderdetails.objects.filter(od_o__o_u__u_name=username)
     return render(request, 'orderlist.html', {'orders': db})
@@ -276,6 +405,32 @@ def del_cart(request):
     return HttpResponseRedirect('http://127.0.0.1:8000/cart')
 
 
+def add_cart(request):
+    username = request.COOKIES.get('name', '')
+    if username:
+        bkid = request.GET['bk_id']
+        if bkid:
+            """
+            u = Users.objects.get(u_name=username)
+            b = Books.objects.get(id=bkid)
+            uid = u.id
+            c1 = Cart(c_u=u, c_b=b, c_amount=1)
+            c1.save()
+            """
+            u = Users.objects.get(u_name=username)
+            uid = u.id
+            sql = 'insert into cart(c_u_id, c_b_id, c_amount) values(' + str(uid) + ',' + str(bkid) + ', 1)'
+            cursor = connection.cursor()
+            cursor.execute(sql)
+            return HttpResponseRedirect('http://127.0.0.1:8000/cart')
+    else:
+        # 请登录
+        return HttpResponseRedirect('http://127.0.0.1:8000/login')
+        pass
+
+    pass
+
+
 def order(request):
     username = request.COOKIES.get('name', '')
     db = Cart.objects.filter(c_u__u_name=username)
@@ -331,3 +486,6 @@ def order_success(request):
     # 插入订单详情表
     return render(request, 'order_success.html')
     pass
+
+
+

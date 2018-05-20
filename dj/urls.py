@@ -23,8 +23,20 @@ from django.contrib import staticfiles
 
 urlpatterns = [
      path('admin/', admin.site.urls),
-     path('hello/', view.hello),
-     path(r'search_form/', view.search_form),
+     # class
+     path(r'books/', view.all_book),
+     path(r'fiction/', view.fiction),
+     path(r'literature/', view.literature),
+     path(r'biography/', view.biography),
+     path(r'youth/', view.youth),
+     path(r'history/', view.history),
+     path(r'textbook/', view.textbook),
+
+
+     # 图书信息
+     url(r'^infor/$', view.book_info),
+
+     # 搜索
      path(r'search/', view.search),
      path(r'index/', view.index),
      # 注册
@@ -37,7 +49,7 @@ urlpatterns = [
      path(r'modifyuserinfo/', view.modif),
      path(r'modifyuserinfo/modif', view.mod),
      # 订单查询
-     path(r'orderlist/', view.order),
+     path(r'orderlist/', view.search_order),
      # 账户余额
      path(r'balance/', view.balance),
      # 充值
@@ -46,6 +58,8 @@ urlpatterns = [
      # 购物车
      path(r'cart/', view.cart),
      path(r'del_cart/', view.del_cart),
+     path(r'add_cart/', view.add_cart),
+
 
      # 订单
      path(r'order/', view.order),
