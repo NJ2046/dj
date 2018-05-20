@@ -6,11 +6,13 @@ from django.utils.encoding import smart_str
 from django.shortcuts import render
 from django.db import connection
 from django.shortcuts import render_to_response, get_object_or_404
+from dj.CF import recommend
+import pandas as pd
 import sys
 import os
 from bs.models import Users, Orders, Books, Orderdetails, Cart
 # noinspection PyUnusedLocal
-
+simM = pd.read_excel('C:\\Users\\NJ\\PycharmProjects\\dj\\dj\\data\\simM.xlsx')
 
 def hello(request):
     """
@@ -269,14 +271,30 @@ def login(request):
     return render(request, 'login.html')
 
 
+def recomd(name):
+    # name = '汪延福'
+    user = Users.objects.get(u_name=name)
+    uid = user.id
+    orders = Orders.objects.filter(o_u=user)
+    bid = list()
+    for ods in orders:
+        ordersdetails = Orderdetails.objects.filter(od_o=ods)
+        for od in ordersdetails:
+            bid.append(od.od_b.id)
+
+    recommend_bid = recommend(uid, bid, simM)
+    return recommend_bid
+
+
 def my(request):
     username = request.COOKIES.get('name', '')
     if request.POST:
         pw = request.POST['pw']
         name = request.POST['name']
-        books = Books.objects.order_by('b_price')[0:5]
         try:
             db = Users.objects.get(u_name=name)
+            bid = recomd(name)
+            books = Books.objects.filter(id__in=bid)[0:5]
             if db.u_pw == pw:
                 response = render_to_response('my.html', {'books': books})
                 name = smart_str(name)
@@ -289,7 +307,8 @@ def my(request):
             return HttpResponse('用户名不存在')
     else:
         if username:
-            books = Books.objects.order_by('b_price')[0:5]
+            bid = recomd(username)
+            books = Books.objects.filter(id__in=bid)[0:5]
             return render(request, 'my.html', {'books': books})
     """
     if username:

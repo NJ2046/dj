@@ -66,6 +66,11 @@ urlpatterns = [
      path(r'orderfinal/', view.final),
      path(r'ordersucess/', view.order_success),
 
+
+
+     # recommed
+     path(r'recommed/', view.recomd),
+
 ]
 
 urlpatterns += staticfiles_urlpatterns()
