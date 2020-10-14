@@ -21,6 +21,6 @@ def send_sms(v_code, mobile):
 
 
 if __name__ == '__main__':
-    mobile = '18903911198'
+    mobile = 'xxxxxxxxxxxxxx'
     text = "您的验证码是：5201314。请不要把验证码泄露给其他人。"
     print(send_sms(text, mobile))
